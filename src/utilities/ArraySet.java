@@ -19,12 +19,22 @@ public class ArraySet<E> implements List<E>, Set<E>
 
 	@Override
 	public boolean add(E e) {
-		return _list.add(e);
+		if (!_list.contains(e) ) {
+			_list.add(e);
+			return true;
+		}
+		
+		return false;
 	}
 
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
-		return _list.addAll(c);
+		boolean bool = true;
+		for (E e : c) {
+			bool = bool && _list.add(e);
+		}
+		
+		return bool;
 	}
 
 	@Override
