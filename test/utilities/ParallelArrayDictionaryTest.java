@@ -1,13 +1,10 @@
 package utilities;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 
 class ParallelArrayDictionaryTest
@@ -166,9 +163,6 @@ class ParallelArrayDictionaryTest
 				assertEquals((values.get(k)),putAll2.get(k));
 			}
 		 
-		 
-
-
 	}
 
 	@Test
