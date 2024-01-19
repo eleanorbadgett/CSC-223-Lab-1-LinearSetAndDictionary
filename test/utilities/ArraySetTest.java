@@ -1,11 +1,11 @@
 package utilities;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 class ArraySetTest
@@ -14,7 +14,12 @@ class ArraySetTest
 	void testArraySetCollectionOfE() {
 		ArraySet<Integer> list = new ArraySet<Integer>();
 		
-		assertFalse(true);
+		Set<Integer> set = new HashSet<Integer>(Arrays.asList(2,-8,44,21,-4));
+		for (int i : set) {
+			list.add(i);
+		}
+		
+		assertTrue(set.equals(list));
 	}
 
 	@Test
@@ -88,13 +93,48 @@ class ArraySetTest
 	void testRemoveAll() {
 		ArraySet<Integer> list = new ArraySet<Integer>();
 		
-		assertFalse(true);
+		int [] set = new int[] {7,5,-3,9,2,};
+		for(int i : set) {
+			list.add(i);
+		}
+		
+		Set<Integer> remove = new HashSet<Integer>(Arrays.asList(7,2,-3));
+		//checks valid removal
+		assertTrue(list.removeAll(remove));
+		
+		
+		ArraySet<Integer> list2 = new ArraySet<Integer>();
+		int [] set2 = new int[] {5,-1,2};
+		for(int i : set2) {
+			list2.add(i);
+		}
+		
+		Set<Integer> remove2 = new HashSet<Integer>(Arrays.asList(-3));
+		// checks list is unchanged if elms to remove are not contianed in orig array  
+		assertFalse(list2.removeAll(remove2));
 	}
 
 	@Test
 	void testAddAllIntCollectionOfQextendsE() {
+		
 		ArraySet<Integer> list = new ArraySet<Integer>();
 		
-		assertFalse(true);
+		int [] set = new int[] {6,-4,3};
+		for(int i : set) {
+			list.add(i);
+		}
+		Set<Integer> addAll = new HashSet<Integer>(Arrays.asList(2,-3));
+		//adds in middle of array
+		assertTrue(list.addAll(1, addAll));
+		
+		//checks cannot add same elements twice
+		assertTrue(list.addAll(0, addAll));
+		
+		//adds to start of array
+		Set<Integer> addAll2 = new HashSet<Integer>(Arrays.asList(19,-1,5));
+		assertTrue(list.addAll(0, addAll2));
+
+
+		
 	}
 }
