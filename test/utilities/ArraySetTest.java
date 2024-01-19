@@ -45,21 +45,22 @@ class ArraySetTest
 	void testAddAllCollectionOfQextendsE() {
 		ArraySet<Integer> list = new ArraySet<Integer>();
 		
-		int[]  set = new int[] {4,3,-6,17,932};
-		Set<Integer> set2 = new HashSet<Integer>(Arrays.asList(2,-8));
+		Set<Integer> set = new HashSet<Integer>(Arrays.asList(2,-8));
+		Set<Integer> set2 = new HashSet<Integer>(Arrays.asList(2,-8,4,3));
+		Set<Integer> set3 = new HashSet<Integer>(Arrays.asList(3,4));
+		Set<Integer> set4 = new HashSet<Integer>(Arrays.asList());
 		
+		// testing addAll() that changes list
+		assertTrue(list.addAll(set));
 		
-		for(int i : set) {
-			list.add(i);
-		}
-		
-		list.addAll(set2);
-		//can addAll() valid elements
+		// testing addAll() that changes part of list
 		assertTrue(list.addAll(set2));
 		
-		//cannot add all duplicate elements
-		assertTrue(list.addAll(set2));
-	
+		// testing addAll() that does not change list (adds duplicates)
+		assertFalse(list.addAll(set3));
+		
+		// testing addAll() that does not change the list (adds nothing)
+		assertFalse(list.addAll(set4));
 	}
 
 	@Test
@@ -93,49 +94,82 @@ class ArraySetTest
 	@Test
 	void testRemoveAll() {
 		ArraySet<Integer> list = new ArraySet<Integer>();
+		ArraySet<Integer> listCorrect = new ArraySet<Integer>();
 		
-		int [] set = new int[] {7,5,-3,9,2,};
+		int [] set = new int[] {7,5,-3,9,2};
+		
 		for(int i : set) {
 			list.add(i);
 		}
 		
-		Set<Integer> remove = new HashSet<Integer>(Arrays.asList(7,2,-3));
-		//checks valid removal
-		assertTrue(list.removeAll(remove));
+		int [] set2 = new int[] {5,9};
 		
-		
-		ArraySet<Integer> list2 = new ArraySet<Integer>();
-		int [] set2 = new int[] {5,-1,2};
 		for(int i : set2) {
-			list2.add(i);
+			listCorrect.add(i);
 		}
 		
-		Set<Integer> remove2 = new HashSet<Integer>(Arrays.asList(-3));
-		// checks list is unchanged if elms to remove are not contained in orig array  
-		assertFalse(list2.removeAll(remove2));
+		Set<Integer> remove = new HashSet<Integer>(Arrays.asList(7,2,-3));
+		
+		// checks the the list changed
+		assertTrue(list.removeAll(remove));
+		
+		// checks that the list contains the correct values
+		assertEquals(listCorrect, list);
+		
+		// removing rest of list (intentionally with elements not in same order)
+		Set<Integer> remove2 = new HashSet<Integer>(Arrays.asList(9,5));
+
+		// checks that the list changed
+		assertTrue(list.removeAll(remove2));
+		
+		// checks that the list is now empty
+		assertTrue(list.isEmpty());
+		
+		// now to check for element not in list
+		Set<Integer> remove3 = new HashSet<Integer>(Arrays.asList(-3));
+		
+		// -3 is not in list (empty), so no change
+		assertFalse(list.removeAll(remove3));
+		
+		// -3 is not in list (-5), so no change
+		list.add(-5);
+		assertFalse(list.removeAll(remove3));
+		
+		// now to check empty remove
+		Set<Integer> remove4 = new HashSet<Integer>(Arrays.asList());
+		
+		// no items to remove, so no change
+		assertFalse(list.removeAll(remove4));
 	}
 
 	@Test
 	void testAddAllIntCollectionOfQextendsE() {
 		
 		ArraySet<Integer> list = new ArraySet<Integer>();
+		int[] arr = new int[] {6,-4,3};
 		
-		int [] set = new int[] {6,-4,3};
-		for(int i : set) {
+		for(int i : arr) {
 			list.add(i);
 		}
-		Set<Integer> addAll = new HashSet<Integer>(Arrays.asList(2,-3));
-		//adds in middle of array
-		assertTrue(list.addAll(1, addAll));
 		
-		//checks cannot add same elements twice
-		assertFalse(list.addAll(1, addAll));
+		Set<Integer> set = new HashSet<Integer>(Arrays.asList(19,-1,5));
+		Set<Integer> set2 = new HashSet<Integer>(Arrays.asList(2,-3));
+		Set<Integer> set3 = new HashSet<Integer>(Arrays.asList(2,-3,99,-100));
+		Set<Integer> set4 = new HashSet<Integer>(Arrays.asList(11,-13));
 		
-		//adds to start of array
-		Set<Integer> addAll2 = new HashSet<Integer>(Arrays.asList(19,-1,5));
-		assertTrue(list.addAll(0, addAll2));
-
-
+		// adds to the start of the set
+		assertTrue(list.addAll(0, set));
 		
+		// adds to the middle of the set
+		assertTrue(list.addAll(1, set2));
+		
+		// adds to the set with all duplicates, so no change
+		assertFalse(list.addAll(4, set2));
+		
+		// adds to the set with some duplicates
+		assertTrue(list.addAll(2, set3));
+		
+		// adds to the end of the set explicitly
+		assertTrue(list.addAll(list.size() - 1, set4));
 	}
 }
