@@ -1,12 +1,6 @@
 package utilities;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Set;
-import java.util.Spliterator;
+import java.util.*;
 
 public class ArraySet<E> implements List<E>, Set<E>
 {
@@ -29,12 +23,16 @@ public class ArraySet<E> implements List<E>, Set<E>
 
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
-		boolean bool = true;
+		boolean changed = false;
+		
 		for (E e : c) {
-			bool = bool && _list.add(e);
+			if (!_list.contains(e) ) {
+				_list.add(e);
+				changed = true;
+			}
 		}
 		
-		return bool;
+		return changed;
 	}
 
 	@Override
@@ -79,7 +77,19 @@ public class ArraySet<E> implements List<E>, Set<E>
 
 	@Override
 	public boolean addAll(int index, Collection<? extends E> c) {
-		return _list.addAll(c);
+		boolean changed = false;
+		int n = 0;
+		
+		// using n to maintain the order from c to _list
+		for (E e : c) {
+			if (!_list.contains(e) ) {
+				_list.add(index + n, e);
+				changed = true;
+				n++;
+			}
+		}
+		
+		return changed;
 	}
 
 	@Override
@@ -104,12 +114,20 @@ public class ArraySet<E> implements List<E>, Set<E>
 
 	@Override
 	public E set(int index, E element) {
-		return _list.set(index, element);
+		E out = _list.get(index);
+		
+		if (!_list.contains(element)) {
+			_list.set(index, element);
+		}
+		
+		return out;
 	}
 
 	@Override
 	public void add(int index, E element) {
-		_list.add(index, element);
+		if (!_list.contains(element) ) {
+			_list.add(element);
+		}
 	}
 
 	@Override
@@ -124,7 +142,7 @@ public class ArraySet<E> implements List<E>, Set<E>
 
 	@Override
 	public int lastIndexOf(Object o) {
-		return _list.lastIndexOf(o);
+		return indexOf(o);
 	}
 
 	@Override

@@ -15,6 +15,7 @@ class ArraySetTest
 		ArraySet<Integer> list = new ArraySet<Integer>();
 		
 		Set<Integer> set = new HashSet<Integer>(Arrays.asList(2,-8,44,21,-4));
+		
 		for (int i : set) {
 			list.add(i);
 		}
@@ -54,7 +55,7 @@ class ArraySetTest
 		
 		list.addAll(set2);
 		//can addAll() valid elements
-		assertTrue (list.addAll(set2));
+		assertTrue(list.addAll(set2));
 		
 		//cannot add all duplicate elements
 		assertTrue(list.addAll(set2));
@@ -110,7 +111,7 @@ class ArraySetTest
 		}
 		
 		Set<Integer> remove2 = new HashSet<Integer>(Arrays.asList(-3));
-		// checks list is unchanged if elms to remove are not contianed in orig array  
+		// checks list is unchanged if elms to remove are not contained in orig array  
 		assertFalse(list2.removeAll(remove2));
 	}
 
@@ -128,7 +129,7 @@ class ArraySetTest
 		assertTrue(list.addAll(1, addAll));
 		
 		//checks cannot add same elements twice
-		assertTrue(list.addAll(0, addAll));
+		assertFalse(list.addAll(1, addAll));
 		
 		//adds to start of array
 		Set<Integer> addAll2 = new HashSet<Integer>(Arrays.asList(19,-1,5));

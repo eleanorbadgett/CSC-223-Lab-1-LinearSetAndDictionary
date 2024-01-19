@@ -24,9 +24,6 @@ class ParallelArrayDictionaryTest
 		for( int k = 0; k<keys.size(); k++) {
 			assertEquals((values.get(k)),pad.get(k));
 		}
-
-
-
 	}
 
 	@Test

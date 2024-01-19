@@ -1,10 +1,6 @@
 package utilities;
 
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class ParallelArrayDictionary<Key, Value> implements Map<Key, Value>
 {
@@ -43,17 +39,26 @@ public class ParallelArrayDictionary<Key, Value> implements Map<Key, Value>
 	}
 
 	@Override
-	public Value put(Key key, Value value) {
-		_keys.add(key);
-		
-		if (_values.add(value)) {
-			return value;
+	public Value put(Key key, Value value) {				
+		if(!_keys.contains(key)) {
+			_keys.add(key);
+			_values.add(value);
+			return null;
 		}
-		return null;
+		
+		Value oldValue = get(key);
+		_values.set(_keys.indexOf(key), value);
+		
+		return oldValue;
 	}
 
 	@Override
 	public Value remove(Object key) {
+		if (!_keys.contains(key)) {
+			return null;
+		}
+		
+		_keys.remove(_keys.indexOf(key));
 		return _values.remove(_keys.indexOf(key));
 	}
 
@@ -82,6 +87,12 @@ public class ParallelArrayDictionary<Key, Value> implements Map<Key, Value>
 
 	@Override
 	public Set<Entry<Key, Value>> entrySet() {
-		return null;
+		Map<Key, Value> m = new HashMap<>();
+		
+		for (Key key : _keys) {
+			m.put(key, get(key));
+		}
+		
+		return m.entrySet();
 	}
 }
