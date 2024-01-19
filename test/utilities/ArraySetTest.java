@@ -74,6 +74,7 @@ class ArraySetTest
 		}
 		
 		Set<Integer> r = new HashSet<Integer>(Arrays.asList(7,3,-1));
+		
 		//test valid retain elements
 		assertTrue(list.retainAll(r));
 		
@@ -82,13 +83,11 @@ class ArraySetTest
 		for(int i : set) {
 			list2.add(i);
 		}
-		
 
 		Set<Integer> fail = new HashSet<Integer>(Arrays.asList(88,5,21));
 		
 		//does not retain invalid elmts 
 		assertTrue(list2.retainAll(fail));
-
 	}
 
 	@Test
