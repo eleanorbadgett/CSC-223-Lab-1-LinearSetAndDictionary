@@ -1,3 +1,11 @@
+/**
+ * This class implements a dictionary with parallel arrays. The parallel-
+ * ness ensures the indices of keys and their corresponding values are equal.
+ * 
+ * Authors: Jack Roberts, Eleanor Badgett
+ * Date: 1/19/23
+ */
+
 package utilities;
 
 import java.util.*;
@@ -58,8 +66,10 @@ public class ParallelArrayDictionary<Key, Value> implements Map<Key, Value>
 			return null;
 		}
 		
+		Value value = _values.remove(_keys.indexOf(key));
 		_keys.remove(_keys.indexOf(key));
-		return _values.remove(_keys.indexOf(key));
+		
+		return value;
 	}
 
 	@Override

@@ -1,3 +1,11 @@
+/**
+ * This class implements an array set, which is an array list with only
+ * unique values included.
+ * 
+ * Authors: Jack Roberts, Eleanor Badgett
+ * Date: 1/19/23
+ */
+
 package utilities;
 
 import java.util.*;
@@ -163,5 +171,11 @@ public class ArraySet<E> implements List<E>, Set<E>
 	@Override
 	public Spliterator<E> spliterator() {
 		return _list.spliterator();
+	}
+	
+	// for testing purposes
+	@Override
+	public boolean equals(Object o) {
+		return o instanceof ArraySet<?> && _list.equals(((ArraySet<?>) o)._list);
 	}
 }
